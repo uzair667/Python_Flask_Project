@@ -132,6 +132,15 @@ def edit(args) ->'html':
     result = Data.query.all()    
     header = ('id','title','price','description','category','image','rating(rate)','rating(count)')
     return render_template('edit.html',result = result, head_titles = header)
+
+@app.route('/search', methods = ['POST'])
+def search() -> 'html':
+    user_id = request.form.get('id')
     
+    result = Data.query.where(Data.id == user_id).first()
+    header = ('id','title','price','description','category','image','rating(rate)','rating(count)')
+    return render_template('search.html',rs = result, head_titles = header)
+
+
 if __name__ == '__main__':
     app.run(debug = True)

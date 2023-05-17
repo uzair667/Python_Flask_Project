@@ -3,8 +3,15 @@
 
 <form method = 'POST'  action = '/files_page'>
     <h3> enter file : </h3>
-    <input value = 'Tap to enter file' type = 'submit'>
+    <input value = 'Click to enter file' type = 'submit'>
     </form>
+
+<form method = 'POST' action='/search'>
+    <h3>search an id: </h3>
+    <input type="text" name="id">
+    <input type="submit" value="search">
+
+</form>    
 <table border = 1>
     <tr>
         {% for head_title in head_titles %}
