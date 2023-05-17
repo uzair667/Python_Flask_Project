@@ -1,14 +1,12 @@
 from flask import Flask, render_template, jsonify, request
 import requests as req
 import json 
-import sqlalchemy
 from sqlalchemy import func
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_marshmallow import Marshmallow
-from models import Data, db, ma, DataSchema, Data, File, Tracking
+from models import *
 import os
-import uuid
 from werkzeug.utils import secure_filename
 from flask import send_from_directory
 from webargs import fields
@@ -20,7 +18,7 @@ from datetime import datetime
 import pandas as pd
 
 app  = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:admin123@localhost/fake_db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:admin123@localhost/new_db'
 app.config['UPLOAD_FOLDER'] = 'uploads'
 
 migrate = Migrate(app, db)
@@ -43,7 +41,7 @@ def get_data() -> json:
     rowcount = db.session.query(func.count(data.title)).scalar()
     if rowcount == 0:
 
-        db.session.add(res)
+        db.session.add_all(res)
         db.session.commit()
     else:
         print('data already exist')
@@ -108,7 +106,7 @@ def download_file(id)->'html':
     file = File.query.filter_by(id=file_id).first()
     return send_from_directory(app.config['UPLOAD_FOLDER'], file.file_name, as_attachment=True)
 
-@app.route('/edit')
+@app.route('/edit', methods = ['POST'])
 @use_args({'title': fields.String(required=True), 'id': fields.String(required=True)}, location = 'form')
 def edit(args) ->'html':
     id = args.get('id')
