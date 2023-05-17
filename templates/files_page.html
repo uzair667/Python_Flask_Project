@@ -1,0 +1,12 @@
+{% extends 'home.html' %}
+{% block body %}
+
+<form method = 'POST'  action = '/files' enctype="multipart/form-data">
+    <h3> enter file : </h3>
+    <input type="file", name="file"><br>
+    <h3>enter description</h3>
+    <input type="text", name="description", required>
+    <input value = 'Submit' type = 'submit'>
+    </form>
+
+{% endblock %}

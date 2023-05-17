@@ -1,0 +1,22 @@
+{% extends 'home.html' %}
+{% block body %}
+<table border = 1>
+    <tr>
+        {% for head_title in head_titles %}
+        <th>{{ head_title }}</th>
+        {% endfor %}
+        </tr>
+    {% for rs in result %}
+            <tr>
+                <td>{{ rs.id }}</td>
+                <td>{{rs.title}}</td>
+                <td>{{ rs.price }}</td>
+                <td>{{ rs.description }}</td>
+                <td>{{ rs.category }}</td>
+                <td>{{ rs.image }}</td>
+                <td>{{ rs.rating.rate }}</td>
+                <td>{{ rs.rating.count }}</td>
+            </tr>
+    {% endfor %}
+</table>
+{% endblock %}
